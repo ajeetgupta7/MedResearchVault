@@ -1,0 +1,13 @@
+CREATE INDEX IF NOT EXISTS idx_users_role_id ON users(role_id);
+CREATE INDEX IF NOT EXISTS idx_researchers_department_id ON researchers(department_id);
+CREATE INDEX IF NOT EXISTS idx_studies_status ON studies(status);
+CREATE INDEX IF NOT EXISTS idx_studies_pi ON studies(principal_investigator_id);
+CREATE INDEX IF NOT EXISTS idx_participants_study_id ON participants(study_id);
+CREATE INDEX IF NOT EXISTS idx_participants_disease_id ON participants(disease_id);
+CREATE INDEX IF NOT EXISTS idx_samples_participant_id ON samples(participant_id);
+CREATE INDEX IF NOT EXISTS idx_samples_status ON samples(status);
+CREATE INDEX IF NOT EXISTS idx_experiments_study_id ON experiments(study_id);
+CREATE INDEX IF NOT EXISTS idx_experiments_researcher_id ON experiments(researcher_id);
+CREATE INDEX IF NOT EXISTS idx_experiments_status ON experiments(status);
+CREATE INDEX IF NOT EXISTS idx_research_results_experiment_id ON research_results(experiment_id);
+CREATE INDEX IF NOT EXISTS idx_audit_logs_table_changed_at ON audit_logs(table_name, changed_at DESC);

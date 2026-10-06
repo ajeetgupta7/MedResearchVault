@@ -1,0 +1,18 @@
+# Relational Schema
+
+- roles(role_id PK, role_name UQ)
+- users(user_id PK, username UQ, email UQ, password_hash, role_id FK->roles, is_active, created_at, updated_at)
+- departments(department_id PK, department_name UQ, location, created_at, updated_at)
+- researchers(researcher_id PK, researcher_code UQ, email UQ, department_id FK->departments, user_id UQ FK->users, ...)
+- studies(study_id PK, study_code UQ, principal_investigator_id FK->researchers, status, dates, ...)
+- study_researchers(study_id FK, researcher_id FK, assigned_role, assigned_at, PK(study_id,researcher_id))
+- diseases(disease_id PK, disease_code UQ, disease_name UQ, category, ...)
+- participants(participant_id PK, participant_code UQ, disease_id FK, study_id FK, demographics/status, ...)
+- samples(sample_id PK, sample_code UQ, participant_id FK, study_id FK, lifecycle status, ...)
+- experiments(experiment_id PK, experiment_code UQ, study_id FK, sample_id FK, researcher_id FK, status, success_score, ...)
+- biomarkers(biomarker_id PK, biomarker_code UQ, biomarker_name UQ, reference ranges, ...)
+- experiment_biomarkers(experiment_id FK, biomarker_id FK, measured_value, measured_at, PK(experiment_id,biomarker_id))
+- research_results(result_id PK, experiment_id FK, finding, conclusion, confidence_score, ...)
+- publications(publication_id PK, publication_code UQ, doi UQ, ...)
+- study_publications(study_id FK, publication_id FK, PK(study_id,publication_id))
+- audit_logs(audit_id PK, table_name, record_id, action, actor, changed_at, details)
