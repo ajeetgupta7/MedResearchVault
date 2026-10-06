@@ -1,0 +1,41 @@
+version: '3.9'
+services:
+  postgres:
+    image: postgres:16
+    container_name: mrv-postgres
+    environment:
+      POSTGRES_USER: mrv_user
+      POSTGRES_PASSWORD: mrv_password
+      POSTGRES_DB: medresearchvault
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database:/docker-entrypoint-initdb.d
+
+  backend:
+    build:
+      context: ./backend
+    container_name: mrv-backend
+    environment:
+      SECRET_KEY: change-me
+      JWT_SECRET_KEY: change-me
+      DATABASE_URL: postgresql+psycopg2://mrv_user:mrv_password@postgres:5432/medresearchvault
+    ports:
+      - "5000:5000"
+    depends_on:
+      - postgres
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: mrv-frontend
+    environment:
+      VITE_API_URL: http://localhost:5000
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
